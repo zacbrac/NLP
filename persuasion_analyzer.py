@@ -21,14 +21,14 @@ def getNGrams(n,inputFile):
             for y in range(0,n):
                 gram.append(myArr[x + y])
 
-            if '-'.join(gram) in grams:
-                grams['-'.join(gram)] += 1
+            if ' '.join(gram) in grams:
+                grams[' '.join(gram)] += 1
             else:
-                grams['-'.join(gram)] = 1
+                grams[' '.join(gram)] = 1
 
     return grams
 
-trigrams = getNGrams(3,'persuasion.txt')
+trigrams = getNGrams(8,'persuasion.txt')
 
 for x in trigrams:
     
