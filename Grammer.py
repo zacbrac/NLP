@@ -39,6 +39,8 @@ class Grammer(object):
                 else: 
                     grams2[gram[0]] = 1
 
+        text.close()
+
         return [grams, grams2]
 
     def importNGrams(self, n, inputFile):
@@ -74,6 +76,8 @@ class Grammer(object):
                     grams[1][gram[0]] += 1
                 else: 
                     grams[1][gram[0]] = 1
+
+        text.close()
 
         json.dump(grams, open(gramFile, 'w'))
 
