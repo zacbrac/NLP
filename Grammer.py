@@ -1,4 +1,5 @@
 import json
+from os.path import isfile, join
 
 class Grammer(object):
     """Grammer creates N-Grams for building language models as well as checks incoming sentences for correctness"""
@@ -51,8 +52,11 @@ class Grammer(object):
 
         gramFile = self.getGramFile(n)
 
-        with open(gramFile) as file_data:
-            grams = json.load(file_data)
+        if isfile(gramFile):
+            with open(gramFile) as file_data:
+                grams = json.load(file_data)
+        else: 
+            grams = [{},{}]
 
         for line in text: 
             
@@ -90,18 +94,21 @@ class Grammer(object):
 
         gramFile = self.getGramFile(gramSize)
 
-        with open(gramFile) as file_data:
-            grams = json.load(file_data)
+        if isfile(gramFile):
+            with open(gramFile) as file_data:
+                grams = json.load(file_data)
+        else:
+            grams = [{},{}]
 
         try:
             message = str(float(grams[0][' '.join(sentence_to_check)]) / float(grams[1][sentence_to_check[0]])) + ' likelihood of correctness (based on test set)'
         
         except Exception, e:
            
-            print "Owch, I've never seen that phrase before, I believe it's incorrect."
-            s = raw_input('What do you think? (yes: valid, no: invalid): ')
+            print 'Owch, I\'ve never seen that phrase before, I believe it\'s incorrect.'
+            response = raw_input('What do you think? (yes: valid, no: invalid): ')
            
-            if s == 'yes':
+            if response == 'yes':
                 if ' '.join(sentence_to_check) in grams[0]:
                     grams[0][' '.join(sentence_to_check)] += 1
                 else:
